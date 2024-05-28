@@ -26,7 +26,7 @@ public class Scheduling {
     @JoinColumn(name = "barber_id")
     private Barber barber;
     @ManyToOne
-    @JoinColumn(name = "barber_shop")
+    @JoinColumn(name = "barber_shop_id")
     private BarberShop barberShop;
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -40,7 +40,7 @@ public class User {
     private String phoneNumber;
     private SexEnum sex;
     private String cpf;
-    private RoleEnum roleEnum;
+    private RoleEnum role;
     @CreatedDate
     @Column(name = "created_at",nullable = false,updatable = false)
     private Timestamp createdAt;
