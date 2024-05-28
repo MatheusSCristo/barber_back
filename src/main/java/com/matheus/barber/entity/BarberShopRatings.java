@@ -9,34 +9,26 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "barber")
+@Table(name = "barber_shop_ratings")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Barber {
+public class BarberShopRatings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    @Column(columnDefinition = "TEXT")
-    private String bio;
-    @Column(name = "image_url")
-    private String imageUrl;
-    @CreatedDate
-    @Column(name = "created_at",nullable = false,updatable = false)
-    private Timestamp createdAt;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "barber_shop_id")
+    @ManyToOne(cascade = CascadeType.ALL)
     private BarberShop barberShop;
-    @OneToMany(mappedBy = "barber",fetch = FetchType.EAGER)
-    private List<Scheduling> schedulings=new ArrayList<>();
-    @OneToMany(mappedBy = "barber")
-    private List<BarberRating> ratings=new ArrayList<>();
+    private String name;
+    private Integer rating;
+    @Column(columnDefinition = "TEXT")
+    private String text;
+    @CreatedDate
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
 }

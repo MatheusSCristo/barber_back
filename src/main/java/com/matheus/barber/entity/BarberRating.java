@@ -13,17 +13,16 @@ import java.util.UUID;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "barber_avaliation")
+@Table(name = "barber_rating")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BarberAvaliation {
+public class BarberRating {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @OneToOne
-    @JoinColumn(name = "barber_id")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Barber barber;
     private String name;
     private Integer rating;

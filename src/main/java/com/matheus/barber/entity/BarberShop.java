@@ -45,4 +45,10 @@ public class BarberShop {
     private Timestamp createdAt;
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
     private List<Scheduling> schedulings=new ArrayList<>();
+    @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
+    private List<Barber> barbers=new ArrayList<>();
+    @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
+    private List<BarberShopRatings> ratings=new ArrayList<>();
+
+
 }
