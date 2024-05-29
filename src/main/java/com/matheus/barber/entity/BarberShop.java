@@ -1,5 +1,6 @@
 package com.matheus.barber.entity;
 
+import com.matheus.barber.dto.BarberShop.BarberShopCreateDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,10 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.w3c.dom.Text;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,19 +37,32 @@ public class BarberShop {
     @Column(name = "location_number")
     private String locationNumber;
     private String cep;
-    @Column(name = "instagram_link")
-    private String instagramLink;
+    @Column(name = "instagram_url")
+    private String instagramUrl;
     @Column(name = "images_url")
     private List<String> imagesUrl=new ArrayList<>();
-    @CreatedDate
     @Column(name = "created_at",nullable = false,updatable = false)
-    private Timestamp createdAt;
+    private Timestamp createdAt=new Timestamp(new Date().getTime());
+    //FIX CREATED AT //
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
     private List<Scheduling> schedulings=new ArrayList<>();
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
     private List<Barber> barbers=new ArrayList<>();
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
-    private List<BarberShopRatings> ratings=new ArrayList<>();
+    private List<BarberShopRating> ratings=new ArrayList<>();
+
+    public BarberShop(BarberShopCreateDto barberShopCreateDto){
+        this.name=barberShopCreateDto.name();
+        this.cnpj=barberShopCreateDto.cnpj();
+        this.email=barberShopCreateDto.email();
+        this.password=barberShopCreateDto.password();
+        this.bio=barberShopCreateDto.bio();
+        this.contactNumber=barberShopCreateDto.contact_number();
+        this.locationNumber=barberShopCreateDto.location_number();
+        this.cep=barberShopCreateDto.cep();
+        this.instagramUrl=barberShopCreateDto.instagram_url();
+        this.imagesUrl=barberShopCreateDto.images_url();
+    }
 
 
 }

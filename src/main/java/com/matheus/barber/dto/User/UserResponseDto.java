@@ -1,15 +1,10 @@
 package com.matheus.barber.dto.User;
 
 import com.matheus.barber.dto.Scheduling.SchedulingResponseDto;
-import com.matheus.barber.entity.Scheduling;
 import com.matheus.barber.entity.User;
 import com.matheus.barber.enums.RoleEnum;
 import com.matheus.barber.enums.SexEnum;
-import com.matheus.barber.utils.SchedulingResponseFactory;
-import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.jdbc.support.CustomSQLErrorCodesTranslation;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -17,8 +12,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-
-
 public class UserResponseDto {
     private UUID id;
     private String name;
@@ -41,7 +34,7 @@ public class UserResponseDto {
         this.cpf=user.getCpf();
         this.role=user.getRole();
         this.createdAt=user.getCreatedAt();
-        this.schedulings=SchedulingResponseFactory.getList(user.getSchedulings());
+        this.schedulings=user.getSchedulings().stream().map(item->new SchedulingResponseDto(item)).toList();
     }
 
 

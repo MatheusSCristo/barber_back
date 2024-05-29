@@ -3,14 +3,7 @@ package com.matheus.barber.dto.Barber;
 import com.matheus.barber.dto.BarberRating.BarberRatingResponseDto;
 import com.matheus.barber.dto.Scheduling.SchedulingResponseDto;
 import com.matheus.barber.entity.Barber;
-import com.matheus.barber.entity.BarberRating;
-import com.matheus.barber.entity.BarberShop;
-import com.matheus.barber.entity.Scheduling;
-import com.matheus.barber.utils.BarberRatingResponseFactory;
-import com.matheus.barber.utils.SchedulingResponseFactory;
-import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -36,7 +29,7 @@ public class BarberResponseDto {
         this.imageUrl = barber.getImageUrl();
         this.createdAt = barber.getCreatedAt();
         this.barberShopId = barber.getBarberShop().getId();
-        this.schedulings = SchedulingResponseFactory.getList(barber.getSchedulings());
-        this.ratings = BarberRatingResponseFactory.getList(barber.getRatings());
+        this.schedulings = barber.getSchedulings().stream().map(item->new SchedulingResponseDto(item)).toList();
+        this.ratings = barber.getRatings().stream().map(item->new BarberRatingResponseDto(item)).toList();
     }
 }

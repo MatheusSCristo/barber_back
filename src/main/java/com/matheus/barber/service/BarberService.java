@@ -10,10 +10,8 @@ import com.matheus.barber.infra.exceptions.BarberShopNotFoundException;
 import com.matheus.barber.repository.BarberRepository;
 import com.matheus.barber.repository.BarberShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,17 +26,13 @@ public class BarberService {
 
 
     public List<BarberResponseDto> getAllBarbers() {
-        List<BarberResponseDto> list = new ArrayList<>();
-        for (Barber barber : barberRepository.findAll()) {
-            list.add(toBarberResponse(barber));
-        }
-        return list;
+        return barberRepository.findAll().stream().map(item-> new BarberResponseDto(item)).toList();
     }
 
     public BarberResponseDto getBarberById(Integer id) {
         Optional<Barber> optionalBarber = barberRepository.findById(id);
         if (optionalBarber.isEmpty()) throw new BarberNotFoundException();
-        return toBarberResponse(optionalBarber.get());
+        return new BarberResponseDto(optionalBarber.get());
     }
 
     public BarberResponseDto createBarber(BarberCreateDto barberCreateDto) {
@@ -46,7 +40,8 @@ public class BarberService {
         if (optionalBarberShop.isEmpty()) throw new BarberShopNotFoundException();
         Barber barber = new Barber(barberCreateDto);
         barber.setBarberShop(optionalBarberShop.get());
-        return toBarberResponse(barber);
+        barberRepository.save(barber);
+        return new BarberResponseDto(barber);
     }
 
     public BarberResponseDto updateBarber(BarberUpdateDto barberUpdateDto, Integer id) {
@@ -61,7 +56,7 @@ public class BarberService {
             if (optionalBarberShop.isEmpty()) throw new BarberShopNotFoundException();
             barber.setBarberShop(optionalBarberShop.get());
         }
-        return toBarberResponse(optionalBarber.get());
+        return new BarberResponseDto(optionalBarber.get());
     }
 
     public void deleteBarber(Integer id) {
@@ -71,9 +66,6 @@ public class BarberService {
     }
 
 
-    private BarberResponseDto toBarberResponse(Barber barber) {
-        return new BarberResponseDto(barber);
-    }
 
 
 }

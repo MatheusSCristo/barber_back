@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BarberShopRatings {
+public class BarberShopRating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

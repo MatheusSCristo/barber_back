@@ -11,11 +11,9 @@ import com.matheus.barber.infra.exceptions.UserNotFoundException;
 import com.matheus.barber.repository.BarberRepository;
 import com.matheus.barber.repository.BarberShopRepository;
 import com.matheus.barber.repository.UserRepository;
-import com.matheus.barber.utils.UserResponseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,25 +32,26 @@ public class UserService {
 
 
     public List<UserResponseDto> getAllUsers() {
-        return getUsersResponseList(userRepository.findAll());
+        return userRepository.findAll().stream().map(item->new UserResponseDto(item)).toList();
     }
 
     public UserResponseDto getUserById(UUID id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) throw new UserNotFoundException();
-        return UserResponseFactory.get(user.get());
+        return new UserResponseDto(user.get());
     }
 
     public List<UserResponseDto> getAllUsersByBarberShop(UUID id) {
         Optional<BarberShop> optionalBarberShop = barberShopRepository.findById(id);
         if (optionalBarberShop.isEmpty()) throw new BarberShopNotFoundException();
-        return getUsersResponseList(userRepository.findAllByBarberShop(optionalBarberShop.get().getId()));
+        return userRepository.findAllByBarberShop(optionalBarberShop.get().getId()).stream().map(item->new UserResponseDto(item)).toList();
+
     }
 
     public List<UserResponseDto> getAllUsersByBarber(Integer id) {
         Optional<Barber> optionalBarber = barberRepository.findById(id);
         if (optionalBarber.isEmpty()) throw new BarberNotFoundException();
-        return getUsersResponseList(userRepository.findAllByBarber(optionalBarber.get().getId()));
+        return userRepository.findAllByBarber(optionalBarber.get().getId()).stream().map(item->new UserResponseDto(item)).toList();
     }
 
     public void deleteUser(UUID id) {
@@ -75,15 +74,9 @@ public class UserService {
         user.setBirthDate(userUpdateDto.birth_date() != null ? userUpdateDto.birth_date() : user.getBirthDate());
         user.setPhoneNumber(userUpdateDto.phone_number() != null ? userUpdateDto.phone_number() : user.getPhoneNumber());
         userRepository.save(user);
-        return UserResponseFactory.get(user);
+        return new UserResponseDto(user);
     }
 
-    private List<UserResponseDto> getUsersResponseList(List<User> users) {
-        List<UserResponseDto> response = new ArrayList<>();
-        for (User user : users) {
-            response.add(UserResponseFactory.get(user));
-        }
-        return response;
-    }
+
 
 }
