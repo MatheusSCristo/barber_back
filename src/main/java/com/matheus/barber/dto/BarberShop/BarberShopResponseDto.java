@@ -42,6 +42,7 @@ public class BarberShopResponseDto {
         this.schedulings= barberShop.getSchedulings().stream().map(item->new SchedulingResponseDto(item)).toList();
         this.barbers= barberShop.getBarbers().stream().map(item->new BarberResponseDto(item)).toList();
         this.ratings= barberShop.getRatings().stream().map(item->new BarberShopRatingResponseDto(item)).toList();
+        this.createdAt=barberShop.getCreatedAt();
     }
 }
 

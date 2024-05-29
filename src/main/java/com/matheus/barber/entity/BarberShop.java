@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,9 +42,9 @@ public class BarberShop {
     private String instagramUrl;
     @Column(name = "images_url")
     private List<String> imagesUrl=new ArrayList<>();
-    @Column(name = "created_at",nullable = false,updatable = false)
-    private Timestamp createdAt=new Timestamp(new Date().getTime());
-    //FIX CREATED AT //
+    @CreatedDate
+    @Column(name = "created_at",nullable = false)
+    private Timestamp createdAt;
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
     private List<Scheduling> schedulings=new ArrayList<>();
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)

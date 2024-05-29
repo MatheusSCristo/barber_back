@@ -32,6 +32,7 @@ public class BarberShopService {
 
     public BarberShopResponseDto createBarberShop(BarberShopCreateDto barberShopCreateDto) {
         BarberShop barberShop = new BarberShop(barberShopCreateDto);
+
         barberShopRepository.save(barberShop);
         return new BarberShopResponseDto(barberShop);
     }
