@@ -41,16 +41,10 @@ public class UserResponseDto {
         this.cpf=user.getCpf();
         this.role=user.getRole();
         this.createdAt=user.getCreatedAt();
-        this.schedulings=getSchedulings(user.getSchedulings());
+        this.schedulings=SchedulingResponseFactory.getList(user.getSchedulings());
     }
 
 
-    private List<SchedulingResponseDto> getSchedulings(List<Scheduling> schedulings){
-        List<SchedulingResponseDto> response=new ArrayList<>();
-        for(Scheduling scheduling:schedulings){
-            response.add(SchedulingResponseFactory.get(scheduling));
-        }
-        return response;
-    }
+
 
 }

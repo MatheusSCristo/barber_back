@@ -1,5 +1,6 @@
 package com.matheus.barber.entity;
 
+import com.matheus.barber.dto.Barber.BarberCreateDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,4 +40,11 @@ public class Barber {
     private List<Scheduling> schedulings=new ArrayList<>();
     @OneToMany(mappedBy = "barber")
     private List<BarberRating> ratings=new ArrayList<>();
+
+
+    public Barber(BarberCreateDto barberCreateDto){
+        this.name=barberCreateDto.name();
+        this.bio=barberCreateDto.bio();
+        this.imageUrl=barberCreateDto.image_url();
+    }
 }
