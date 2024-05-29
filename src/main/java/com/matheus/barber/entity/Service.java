@@ -1,5 +1,6 @@
 package com.matheus.barber.entity;
 
+import com.matheus.barber.dto.Service.ServiceCreateDto;
 import com.matheus.barber.enums.ServiceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "barber_shop_id")
     private BarberShop barberShop;
     @Column(name = "service_type")
@@ -33,4 +34,10 @@ public class Service {
     private Double total;
     @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
     private List<Scheduling> schedulings = new ArrayList<>();
+
+    public Service(ServiceCreateDto serviceCreateDto){
+        this.serviceType=serviceCreateDto.service_type();
+        this.averageDuration=serviceCreateDto.average_duration();
+        this.total=serviceCreateDto.total();
+    }
 }

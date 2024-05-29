@@ -3,6 +3,7 @@ package com.matheus.barber.dto.BarberShop;
 import com.matheus.barber.dto.Barber.BarberResponseDto;
 import com.matheus.barber.dto.BarberShopRating.BarberShopRatingResponseDto;
 import com.matheus.barber.dto.Scheduling.SchedulingResponseDto;
+import com.matheus.barber.dto.Service.ServiceResponseDto;
 import com.matheus.barber.entity.BarberShop;
 import lombok.Getter;
 
@@ -27,6 +28,7 @@ public class BarberShopResponseDto {
     private List<SchedulingResponseDto> schedulings=new ArrayList<>();
     private List<BarberResponseDto> barbers=new ArrayList<>();
     private List<BarberShopRatingResponseDto> ratings=new ArrayList<>();
+    private List<ServiceResponseDto> services=new ArrayList<>();
 
     public BarberShopResponseDto(BarberShop barberShop){
         this.id=barberShop.getId();
@@ -43,6 +45,8 @@ public class BarberShopResponseDto {
         this.barbers= barberShop.getBarbers().stream().map(item->new BarberResponseDto(item)).toList();
         this.ratings= barberShop.getRatings().stream().map(item->new BarberShopRatingResponseDto(item)).toList();
         this.createdAt=barberShop.getCreatedAt();
+        this.services=barberShop.getServices().stream().map(item->new ServiceResponseDto(item)).toList();
+
     }
 }
 

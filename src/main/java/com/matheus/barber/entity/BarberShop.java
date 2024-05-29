@@ -51,6 +51,8 @@ public class BarberShop {
     private List<Barber> barbers=new ArrayList<>();
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
     private List<BarberShopRating> ratings=new ArrayList<>();
+    @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
+    private List<Service> services=new ArrayList<>();
 
     public BarberShop(BarberShopCreateDto barberShopCreateDto){
         this.name=barberShopCreateDto.name();
