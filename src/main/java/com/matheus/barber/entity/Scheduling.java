@@ -1,14 +1,15 @@
 package com.matheus.barber.entity;
 
+import com.matheus.barber.dto.Scheduling.SchedulingCreateDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 @EntityListeners(AuditingEntityListener.class)
@@ -20,8 +21,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Scheduling {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     @ManyToOne
     @JoinColumn(name = "barber_id")
     private Barber barber;
@@ -38,10 +39,15 @@ public class Scheduling {
     private Timestamp startTime;
     @Column(name = "end_time")
     private Timestamp endTime;
-    private Timestamp date;
     @Column(name = "booked")
-    private boolean Booked;
+    private boolean booked;
     @Column(name = "finished")
     private boolean finished;
+
+    public Scheduling(SchedulingCreateDto schedulingCreateDto) {
+        this.startTime = Timestamp.from(Instant.ofEpochMilli(schedulingCreateDto.start_time()));
+        this.booked = true;
+        this.finished = false;
+    }
 
 }

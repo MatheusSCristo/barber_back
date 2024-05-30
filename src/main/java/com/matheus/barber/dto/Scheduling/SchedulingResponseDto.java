@@ -12,14 +12,13 @@ import java.util.UUID;
 
 @Getter
 public class SchedulingResponseDto {
-    private Integer id;
+    private UUID id;
     private Integer barberId;
     private UUID barberShopId;
     private UUID userId;
     private ServiceResponseDto service;
     private Timestamp startTime;
     private Timestamp endTime;
-    private Timestamp date;
     private boolean booked;
     private boolean finished;
 
@@ -31,7 +30,6 @@ public class SchedulingResponseDto {
         this.service= new ServiceResponseDto(scheduling.getService());
         this.startTime=scheduling.getStartTime();
         this.endTime=scheduling.getEndTime();
-        this.date=scheduling.getDate();
         this.booked=scheduling.isBooked();
         this.finished=scheduling.isFinished();
     }
