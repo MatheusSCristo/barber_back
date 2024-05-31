@@ -1,5 +1,6 @@
 package com.matheus.barber.entity;
 
+import com.matheus.barber.dto.BarberShopRating.BarberShopRatingCreateDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,5 +31,11 @@ public class BarberShopRating {
     @CreatedDate
     @Column(name = "created_at")
     private Timestamp createdAt;
+
+    public BarberShopRating(BarberShopRatingCreateDto barberShopRatingCreateDto){
+        this.name=barberShopRatingCreateDto.name();
+        this.rating=barberShopRatingCreateDto.rating();
+        this.text= barberShopRatingCreateDto.text();
+    }
 
 }
