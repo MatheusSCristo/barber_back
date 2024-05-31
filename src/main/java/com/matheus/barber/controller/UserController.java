@@ -3,6 +3,7 @@ package com.matheus.barber.controller;
 import com.matheus.barber.dto.User.UserResponseDto;
 import com.matheus.barber.dto.User.UserUpdateDto;
 import com.matheus.barber.service.UserService;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable UUID id, @RequestBody @Validated UserUpdateDto userUpdateDto){
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable UUID id, @RequestBody @Valid UserUpdateDto userUpdateDto){
         UserResponseDto user=userService.updateUser(id,userUpdateDto);
         return ResponseEntity.ok().body(user);
     }

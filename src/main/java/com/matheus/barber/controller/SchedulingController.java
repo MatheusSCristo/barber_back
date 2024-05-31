@@ -5,6 +5,7 @@ import com.matheus.barber.dto.Scheduling.SchedulingResponseDto;
 import com.matheus.barber.dto.Scheduling.SchedulingUpdateDto;
 import com.matheus.barber.entity.Scheduling;
 import com.matheus.barber.service.SchedulingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -36,12 +37,12 @@ public class SchedulingController {
     }
 
     @PostMapping
-    public ResponseEntity<SchedulingResponseDto> createScheduling(@RequestBody @Validated SchedulingCreateDto schedulingCreateDto){
+    public ResponseEntity<SchedulingResponseDto> createScheduling(@RequestBody @Valid SchedulingCreateDto schedulingCreateDto){
         return ResponseEntity.ok().body(schedulingService.createScheduling(schedulingCreateDto));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<SchedulingResponseDto> updateScheduling(@PathVariable UUID id,@RequestBody @Validated SchedulingUpdateDto schedulingUpdateDto){
+    public ResponseEntity<SchedulingResponseDto> updateScheduling(@PathVariable UUID id,@RequestBody @Valid SchedulingUpdateDto schedulingUpdateDto){
         return ResponseEntity.ok().body(schedulingService.updateScheduling(id,schedulingUpdateDto));
     }
 

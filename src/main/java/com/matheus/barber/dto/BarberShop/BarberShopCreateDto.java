@@ -1,12 +1,13 @@
 package com.matheus.barber.dto.BarberShop;
 
 import com.matheus.barber.enums.SchedulesEnum;
-import jakarta.annotation.Nonnull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record BarberShopCreateDto(@Nonnull String name, @Nonnull String cnpj, @Nonnull String email,
-                                  @Nonnull String password, @Nonnull String bio, @Nonnull String contact_number,
-                                  @Nonnull String location_number, @Nonnull String cep,
-                                  @Nonnull List<String> images_url, String instagram_url,@Nonnull List<String> available_schedules) {
+public record BarberShopCreateDto(@NotBlank String name, @NotBlank String cnpj, @NotBlank String email,
+                                  @NotBlank String password, @NotBlank String bio, @NotBlank String contact_number,
+                                  @NotBlank String location_number, @NotBlank String cep,
+                                  @NotNull List<String> images_url, String instagram_url, @NotNull  List<String> available_schedules) {
 }

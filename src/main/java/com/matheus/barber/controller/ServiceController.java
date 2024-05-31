@@ -4,6 +4,7 @@ import com.matheus.barber.dto.Service.ServiceCreateDto;
 import com.matheus.barber.dto.Service.ServiceResponseDto;
 import com.matheus.barber.dto.Service.ServiceUpdateDto;
 import com.matheus.barber.service.ServiceService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,12 +32,12 @@ public class ServiceController {
     }
 
     @PostMapping
-    public ResponseEntity<ServiceResponseDto> createService(@RequestBody @Validated ServiceCreateDto serviceCreateDto){
+    public ResponseEntity<ServiceResponseDto> createService(@RequestBody @Valid ServiceCreateDto serviceCreateDto){
         return ResponseEntity.ok().body(serviceService.createService(serviceCreateDto));
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<ServiceResponseDto> updateService(@PathVariable UUID id,@RequestBody @Validated ServiceUpdateDto serviceUpdateDto) {
+    public ResponseEntity<ServiceResponseDto> updateService(@PathVariable UUID id,@RequestBody @Valid ServiceUpdateDto serviceUpdateDto) {
         return ResponseEntity.ok().body(serviceService.updateService(serviceUpdateDto,id));
     }
 

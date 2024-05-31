@@ -1,11 +1,13 @@
 package com.matheus.barber.dto.Scheduling;
 
 import jakarta.annotation.Nonnull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
-public record SchedulingCreateDto(@Nonnull UUID barber_shop_id, @Nonnull Integer barber_id, @Nonnull UUID user_id,
-                                  @Nonnull UUID service_id, @Nonnull Long start_time) {
+public record SchedulingCreateDto(@NotNull UUID barber_shop_id, @NotNull Integer barber_id, @NotNull UUID user_id,
+                                  @NotNull UUID service_id, @NotNull Long start_time) {
 }

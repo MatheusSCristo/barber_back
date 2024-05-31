@@ -5,6 +5,7 @@ import com.matheus.barber.dto.Barber.BarberResponseDto;
 import com.matheus.barber.dto.Barber.BarberUpdateDto;
 import com.matheus.barber.entity.Barber;
 import com.matheus.barber.service.BarberService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,13 +30,13 @@ public class BarberController {
     }
 
     @PostMapping
-    public ResponseEntity<BarberResponseDto> createBarber(@RequestBody @Validated BarberCreateDto barberCreateDto){
+    public ResponseEntity<BarberResponseDto> createBarber(@RequestBody @Valid BarberCreateDto barberCreateDto){
         return ResponseEntity.ok().body(barberService.createBarber(barberCreateDto));
 
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BarberResponseDto> updateBarber(@RequestBody @Validated BarberUpdateDto barberUpdateDto,@PathVariable Integer id){
+    public ResponseEntity<BarberResponseDto> updateBarber(@RequestBody @Valid BarberUpdateDto barberUpdateDto,@PathVariable Integer id){
         return ResponseEntity.ok().body(barberService.updateBarber(barberUpdateDto,id));
     }
 
