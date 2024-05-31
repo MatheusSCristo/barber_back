@@ -5,6 +5,7 @@ import com.matheus.barber.dto.BarberShopRating.BarberShopRatingResponseDto;
 import com.matheus.barber.dto.Scheduling.SchedulingResponseDto;
 import com.matheus.barber.dto.Service.ServiceResponseDto;
 import com.matheus.barber.entity.BarberShop;
+import com.matheus.barber.enums.SchedulesEnum;
 import lombok.Getter;
 
 import java.sql.Timestamp;
@@ -29,6 +30,7 @@ public class BarberShopResponseDto {
     private List<BarberResponseDto> barbers=new ArrayList<>();
     private List<BarberShopRatingResponseDto> ratings=new ArrayList<>();
     private List<ServiceResponseDto> services=new ArrayList<>();
+    private List<String> available_schedules;
 
     public BarberShopResponseDto(BarberShop barberShop){
         this.id=barberShop.getId();
@@ -46,6 +48,7 @@ public class BarberShopResponseDto {
         this.ratings= barberShop.getRatings().stream().map(item->new BarberShopRatingResponseDto(item)).toList();
         this.createdAt=barberShop.getCreatedAt();
         this.services=barberShop.getServices().stream().map(item->new ServiceResponseDto(item)).toList();
+        this.available_schedules=barberShop.getSchedules().stream().map(item->item.getTime()).toList();
 
     }
 }

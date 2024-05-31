@@ -68,7 +68,10 @@ public class BarberShop {
         this.cep=barberShopCreateDto.cep();
         this.instagramUrl=barberShopCreateDto.instagram_url();
         this.imagesUrl=barberShopCreateDto.images_url();
+        this.schedules=barberShopCreateDto.available_schedules().stream().map(item->SchedulesEnum.fromString(item)).toList();
     }
+
+
 
 
 }
