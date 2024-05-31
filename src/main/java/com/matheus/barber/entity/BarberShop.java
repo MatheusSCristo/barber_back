@@ -1,6 +1,7 @@
 package com.matheus.barber.entity;
 
 import com.matheus.barber.dto.BarberShop.BarberShopCreateDto;
+import com.matheus.barber.enums.SchedulesEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,6 +54,8 @@ public class BarberShop {
     private List<BarberShopRating> ratings=new ArrayList<>();
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
     private List<Service> services=new ArrayList<>();
+    private List<SchedulesEnum>  schedules=new ArrayList<>();
+
 
     public BarberShop(BarberShopCreateDto barberShopCreateDto){
         this.name=barberShopCreateDto.name();
