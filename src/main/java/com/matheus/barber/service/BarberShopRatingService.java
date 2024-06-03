@@ -12,6 +12,7 @@ import com.matheus.barber.infra.exceptions.BarberShopRatingNotValidException;
 import com.matheus.barber.infra.exceptions.TextHasProhibitedWordsException;
 import com.matheus.barber.repository.BarberShopRatingRepository;
 import com.matheus.barber.repository.BarberShopRepository;
+import com.matheus.barber.utils.FilterProhibitedWords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class BarberShopRatingService {
     private BarberShopRepository barberShopRepository;
 
     public BarberShopRatingResponseDto createRating(BarberShopRatingCreateDto barberShopRatingCreateDto){
-        filterProhibitedWords(barberShopRatingCreateDto.text());
+        FilterProhibitedWords.filter(barberShopRatingCreateDto.text());
         BarberShopRating barberShopRating=new BarberShopRating(barberShopRatingCreateDto);
         Optional<BarberShop> optionalBarberShop=barberShopRepository.findById(barberShopRatingCreateDto.barber_shop_id());
         if(optionalBarberShop.isEmpty()) throw new BarberShopNotFoundException();
@@ -51,15 +52,6 @@ public class BarberShopRatingService {
     }
 
 
-    private void filterProhibitedWords(String text){
-        String[] words=text.split(" ");
-       Set<String> prohibitedWordsSet = EnumSet.allOf(ProhibitedWordsEnum.class).stream()
-                .map(ProhibitedWordsEnum::getWord)
-                .collect(Collectors.toSet());
-        for (String word:words){
-            if(prohibitedWordsSet.contains(word.toLowerCase())) throw new TextHasProhibitedWordsException();
-        }
-    }
 
 
 }

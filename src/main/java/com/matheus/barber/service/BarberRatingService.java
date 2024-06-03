@@ -9,6 +9,7 @@ import com.matheus.barber.infra.exceptions.BarberNotFoundException;
 import com.matheus.barber.infra.exceptions.BarberRatingNotFoundException;
 import com.matheus.barber.repository.BarberRatingRepository;
 import com.matheus.barber.repository.BarberRepository;
+import com.matheus.barber.utils.FilterProhibitedWords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class BarberRatingService {
     }
 
     public BarberRatingResponseDto createRating(BarberRatingCreateDto barberRatingCreateDto){
+        FilterProhibitedWords.filter(barberRatingCreateDto.text());
         Optional<Barber> optionalBarber=barberRepository.findById(barberRatingCreateDto.barber_id());
         if(optionalBarber.isEmpty()) throw new BarberNotFoundException();
         BarberRating barberRating=new BarberRating(barberRatingCreateDto);
