@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BarberService {
@@ -30,7 +31,7 @@ public class BarberService {
         return barberRepository.findAll().stream().map(item-> new BarberResponseDto(item)).toList();
     }
 
-    public BarberResponseDto getBarberById(Integer id) {
+    public BarberResponseDto getBarberById(UUID id) {
         Optional<Barber> optionalBarber = barberRepository.findById(id);
         if (optionalBarber.isEmpty()) throw new BarberNotFoundException();
         return new BarberResponseDto(optionalBarber.get());
@@ -45,7 +46,7 @@ public class BarberService {
         return new BarberResponseDto(barber);
     }
 
-    public BarberResponseDto updateBarber(BarberUpdateDto barberUpdateDto, Integer id) {
+    public BarberResponseDto updateBarber(BarberUpdateDto barberUpdateDto, UUID id) {
         Optional<Barber> optionalBarber = barberRepository.findById(id);
         if (optionalBarber.isEmpty()) throw new BarberNotFoundException();
         Barber barber = optionalBarber.get();
@@ -60,7 +61,7 @@ public class BarberService {
         return new BarberResponseDto(optionalBarber.get());
     }
 
-    public void deleteBarber(Integer id) {
+    public void deleteBarber(UUID id) {
         Optional<Barber> optionalBarber = barberRepository.findById(id);
         if (optionalBarber.isEmpty()) throw new BarberNotFoundException();
         barberRepository.deleteById(id);

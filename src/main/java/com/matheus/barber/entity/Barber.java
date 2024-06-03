@@ -23,8 +23,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Barber {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String name;
     @Column(columnDefinition = "TEXT")
     private String bio;

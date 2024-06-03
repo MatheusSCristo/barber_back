@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 public class SchedulingResponseDto {
     private UUID id;
-    private Integer barberId;
+    private UUID barberId;
     private UUID barberShopId;
     private UUID userId;
     private ServiceResponseDto service;

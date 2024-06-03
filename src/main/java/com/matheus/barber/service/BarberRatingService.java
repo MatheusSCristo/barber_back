@@ -26,7 +26,7 @@ public class BarberRatingService {
     @Autowired
     private BarberRepository barberRepository;
 
-    public List<BarberRatingResponseDto> getRatingsByBarberId(Integer id){
+    public List<BarberRatingResponseDto> getRatingsByBarberId(UUID id){
         Optional<Barber> barber=barberRepository.findById(id);
         if(barber.isEmpty()) throw new BarberNotFoundException();
         return barberRatingRepository.findByBarber(barber.get()).stream().map(item->new BarberRatingResponseDto(item)).toList();

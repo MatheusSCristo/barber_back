@@ -48,7 +48,7 @@ public class UserService {
 
     }
 
-    public List<UserResponseDto> getAllUsersByBarber(Integer id) {
+    public List<UserResponseDto> getAllUsersByBarber(UUID id) {
         Optional<Barber> optionalBarber = barberRepository.findById(id);
         if (optionalBarber.isEmpty()) throw new BarberNotFoundException();
         return userRepository.findAllByBarber(optionalBarber.get().getId()).stream().map(item->new UserResponseDto(item)).toList();

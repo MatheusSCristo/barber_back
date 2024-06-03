@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("barber")
@@ -25,7 +26,7 @@ public class BarberController {
         return ResponseEntity.ok().body(barberService.getAllBarbers());
     }
     @GetMapping("{id}")
-    public ResponseEntity<BarberResponseDto> getBarberById(@PathVariable Integer id){
+    public ResponseEntity<BarberResponseDto> getBarberById(@PathVariable UUID id){
         return ResponseEntity.ok().body(barberService.getBarberById(id));
     }
 
@@ -35,13 +36,13 @@ public class BarberController {
 
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<BarberResponseDto> updateBarber(@RequestBody @Valid BarberUpdateDto barberUpdateDto,@PathVariable Integer id){
+    @PatchMapping("{id}")
+    public ResponseEntity<BarberResponseDto> updateBarber(@RequestBody @Valid BarberUpdateDto barberUpdateDto,@PathVariable UUID id){
         return ResponseEntity.ok().body(barberService.updateBarber(barberUpdateDto,id));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteBarber(@PathVariable Integer id){
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteBarber(@PathVariable UUID id){
         barberService.deleteBarber(id);
         return ResponseEntity.ok().build();
     }

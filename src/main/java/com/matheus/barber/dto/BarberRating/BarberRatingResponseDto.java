@@ -10,7 +10,7 @@ import java.util.UUID;
 public class BarberRatingResponseDto {
 
     private UUID id;
-    private Integer barberId;
+    private UUID barberId;
     private String name;
     private Integer rating;
     private String text;

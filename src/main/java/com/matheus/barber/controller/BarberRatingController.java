@@ -21,7 +21,7 @@ public class BarberRatingController {
     private BarberRatingService barberRatingService;
 
     @GetMapping("{id}")
-    public ResponseEntity<List<BarberRatingResponseDto>> getRatingsByBarberId(@PathVariable Integer id) {
+    public ResponseEntity<List<BarberRatingResponseDto>> getRatingsByBarberId(@PathVariable UUID id) {
         return ResponseEntity.ok().body(barberRatingService.getRatingsByBarberId(id));
     }
 

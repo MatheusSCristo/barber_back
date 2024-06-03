@@ -1,6 +1,10 @@
 package com.matheus.barber.dto.Scheduling;
 
-import java.sql.Timestamp;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-public record SchedulingUpdateDto( Integer barber_id,  Long start_time) {
+import java.sql.Timestamp;
+import java.util.UUID;
+
+public record SchedulingUpdateDto(UUID barber_id, Long start_time) {
 }

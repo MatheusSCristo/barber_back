@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Getter
 public class BarberResponseDto {
-    private Integer id;
+    private UUID id;
     private String name;
     private String bio;
     private String imageUrl;

@@ -40,7 +40,7 @@ public class UserController {
 
 
     @GetMapping("findByBarber/{id}")
-    public ResponseEntity<List<UserResponseDto>> getAllUsersByBarber(@PathVariable Integer id) {
+    public ResponseEntity<List<UserResponseDto>> getAllUsersByBarber(@PathVariable UUID id) {
         List<UserResponseDto> users = userService.getAllUsersByBarber(id);
         return ResponseEntity.ok().body(users);
     }
