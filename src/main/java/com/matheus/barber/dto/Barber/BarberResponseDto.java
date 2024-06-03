@@ -23,6 +23,7 @@ public class BarberResponseDto {
 
 
     public BarberResponseDto(Barber barber) {
+
         this.id = barber.getId();
         this.name = barber.getName();
         this.bio = barber.getBio();

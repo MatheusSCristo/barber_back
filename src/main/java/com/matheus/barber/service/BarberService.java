@@ -26,6 +26,7 @@ public class BarberService {
 
 
     public List<BarberResponseDto> getAllBarbers() {
+        List<Barber> barbers=barberRepository.findAll();
         return barberRepository.findAll().stream().map(item-> new BarberResponseDto(item)).toList();
     }
 

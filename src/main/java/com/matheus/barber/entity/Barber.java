@@ -36,7 +36,7 @@ public class Barber {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "barber_shop_id")
     private BarberShop barberShop;
-    @OneToMany(mappedBy = "barber",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "barber",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Scheduling> schedulings=new ArrayList<>();
     @OneToMany(mappedBy = "barber")
     private List<BarberRating> ratings=new ArrayList<>();

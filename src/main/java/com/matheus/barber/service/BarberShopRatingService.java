@@ -37,7 +37,7 @@ public class BarberShopRatingService {
         return new BarberShopRatingResponseDto(barberShopRating);
     }
 
-    public void deleteRating(Integer id){
+    public void deleteRating(UUID id){
         Optional<BarberShopRating> optionalBarberShopRating=barberShopRatingRepository.findById(id);
         if(optionalBarberShopRating.isEmpty()) throw new BarberShopRatingNotValidException();
         barberShopRatingRepository.deleteById(id);

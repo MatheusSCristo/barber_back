@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Getter
 public class BarberShopRatingResponseDto {
-    private Integer id;
+    private UUID id;
     private UUID barberShopId;
     private String name;
     private Integer rating;

@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -21,7 +22,7 @@ import java.sql.Timestamp;
 public class BarberShopRating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private UUID id;
     @ManyToOne(cascade = CascadeType.ALL)
     private BarberShop barberShop;
     private String name;

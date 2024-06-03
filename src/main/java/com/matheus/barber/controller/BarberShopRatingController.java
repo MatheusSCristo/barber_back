@@ -26,7 +26,7 @@ public class BarberShopRatingController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteRating(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteRating(@PathVariable UUID id) {
         barberShopRatingService.deleteRating(id);
         return ResponseEntity.ok().build();
     }
