@@ -6,5 +6,5 @@ import jakarta.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public record SchedulingUpdateDto(UUID barber_id, Long start_time) {
+public record SchedulingUpdateDto(UUID barber_id, Long start_time,Boolean finished) {
 }

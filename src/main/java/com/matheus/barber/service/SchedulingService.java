@@ -82,6 +82,7 @@ public class SchedulingService {
         Optional<Scheduling> optionalScheduling = schedulingRepository.findById(id);
         if (optionalScheduling.isEmpty()) throw new SchedulingNotFoundException();
         Scheduling scheduling = optionalScheduling.get();
+        scheduling.setFinished(schedulingUpdateDto.finished());
         if (schedulingUpdateDto.start_time() != null) {
             validateDate(schedulingUpdateDto.start_time());
             scheduling.setStartTime(Timestamp.from(Instant.ofEpochMilli(schedulingUpdateDto.start_time())));
@@ -120,7 +121,7 @@ public class SchedulingService {
     }
 
     private void validateBarber(Barber barber,BarberShop barberShop){
-        if(barberShop.getBarbers().contains(barber)) throw new BarberNotAssociatedToBarberShopException();
+        if(!barberShop.getBarbers().contains(barber)) throw new BarberNotAssociatedToBarberShopException();
     }
 
     private void scheduleValidations(Barber barber,BarberShop barberShop,Long date){

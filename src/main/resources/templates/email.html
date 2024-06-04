@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembrança de Agendamento</title>
+
+</head>
+<body style="font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;">
+<div class="container" style=" width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;">
+    <div class="header" style="text-align: center;border-bottom: 1px solid #ddd;padding-bottom: 10px;">
+        <h1 style="margin: 0;color: #2c3e50;">BarberMaster</h1>
+    </div>
+    <div style="padding: 20px;text-align: center;color:#000">
+        <h2 style="color:#e74c3c" th:text="|Olá, ${username} "></h2>
+        <h2 style="display:flex;gap:5px;justify-content:center;color:#000"
+            th:text="|Este é um lembrete do seu agendamento na barbearia ${barberShop}|">
+        </h2>
+        <h2 style="display:flex;gap:5px;justify-content:center;color:#000"th:text="|Data: ${date}|"></h2>
+        <h2 style="display:flex;gap:5px;justify-content:center;color:#000" th:text="|Hora: ${time}|"> </h2>
+        <h2 style="display:flex;gap:5px;justify-content:center;color:#000" th:text="|Serviço: ${service}|"></h2>
+        <h2 style="color:#000">Estamos ansiosos para atendê-lo!</h2>
+    </div>
+    <div class="footer" style="text-align: center;padding: 10px;font-size: 0.9em;color: #777 ">
+        <p>Obrigado por escolher a BarberMaster!</p>
+        <p>Visite nosso site: <a style="color: #3498db;text-decoration: none;" th:href="${site}" th:text="${site}"></a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
