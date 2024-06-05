@@ -4,7 +4,7 @@ import com.matheus.barber.dto.Email.EmailSendDto;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,23 +15,22 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Service
-public class MessageService {
+public class EmailConsumerService {
+
 
     @Value("${spring.mail.username}")
-    private String username;
+    private  String username;
 
-    private final JavaMailSender mailSender;
-    private final SpringTemplateEngine templateEngine;
+    @Value("${site.url}")
+    private  String siteUrl;
 
-    public MessageService(JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
+    private static  JavaMailSender mailSender;
+    private static  SpringTemplateEngine templateEngine;
+
+    public EmailConsumerService(JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
     }
@@ -42,16 +41,16 @@ public class MessageService {
         Date data = entryFormat.parse(emailSendDto.getTime().toString());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        String formatedDate = dateFormat.format(data);
-        String formatedTime = timeFormat.format(data);
+        String formattedDate = dateFormat.format(data);
+        String formattedTime = timeFormat.format(data);
             MimeMessage message = mailSender.createMimeMessage();
             Context context = new Context();
             context.setVariable("barberShop", emailSendDto.getBarberShop());
             context.setVariable("username", emailSendDto.getUserName());
             context.setVariable("service", emailSendDto.getService().getService());
-            context.setVariable("date", formatedDate);
-            context.setVariable("time",formatedTime);
-            context.setVariable("site", emailSendDto.getSite());
+            context.setVariable("date", formattedDate);
+            context.setVariable("time",formattedTime);
+            context.setVariable("site",siteUrl);
             String process = templateEngine.process("email.html", context);
             MimeMessageHelper helper = new MimeMessageHelper(message,
                     MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,

@@ -43,11 +43,14 @@ public class Scheduling {
     private boolean booked;
     @Column(name = "finished")
     private boolean finished;
+    @Column(name ="reminder_sent")
+    private boolean reminderSent;
 
     public Scheduling(SchedulingCreateDto schedulingCreateDto) {
         this.startTime = Timestamp.from(Instant.ofEpochMilli(schedulingCreateDto.start_time()));
         this.booked = true;
         this.finished = false;
+        this.reminderSent=true;
     }
 
 }

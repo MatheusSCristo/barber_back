@@ -18,5 +18,4 @@ public class EmailSendDto {
     private String BarberShop;
     private String userName;
     private ServiceType service;
-    private String site;
 }
