@@ -91,7 +91,6 @@ public class SchedulingService {
         scheduling.setFinished(Optional.ofNullable(schedulingUpdateDto.finished()).orElse(scheduling.isFinished()));
         if (schedulingUpdateDto.start_time() != null) {
             validateDate(schedulingUpdateDto.start_time());
-            validateAvailableTime(schedulingUpdateDto.start_time(),scheduling.getBarberShop());
             scheduling.setStartTime(Timestamp.from(Instant.ofEpochMilli(schedulingUpdateDto.start_time())));
             scheduling.setEndTime(getEndTime(scheduling.getStartTime().getTime(), optionalScheduling.get().getService().getAverageDuration()));
         }
@@ -101,6 +100,7 @@ public class SchedulingService {
             validateBarber(optionalBarber.get(), scheduling.getBarberShop());
             scheduling.setBarber(optionalBarber.get());
         }
+        validateAvailableTime(schedulingUpdateDto.start_time(), scheduling.getBarberShop(), scheduling.getBarber());
         schedulingRepository.save(scheduling);
         emailConsumerService.sendScheduledEmail(scheduling);
         return new SchedulingResponseDto(optionalScheduling.get());
@@ -122,12 +122,12 @@ public class SchedulingService {
         if (new Date(date).before(new Date())) throw new DateIsNotValidException();
     }
 
-    private void validateAvailableTime(Long date, BarberShop barberShop) {
+    private void validateAvailableTime(Long date, BarberShop barberShop, Barber barber) {
         String scheduledHour = new Date(date).toString().substring(11, 16);
         if (!barberShop.getSchedules().contains(SchedulesEnum.fromString(scheduledHour))) {
             throw new ScheduleTimeNotAvailableException();
         }
-        List<Timestamp> upcomingSchedulings = barberShop.getSchedulings().stream().filter(item -> item.getStartTime().after(Timestamp.from(Instant.now())) && item.isBooked()).map(Scheduling::getStartTime).toList();
+        List<Timestamp> upcomingSchedulings = barberShop.getSchedulings().stream().filter(item -> item.getStartTime().after(Timestamp.from(Instant.now())) && item.isBooked() && item.getBarber() == barber).map(Scheduling::getStartTime).toList();
         if (upcomingSchedulings.contains(Timestamp.from(Instant.ofEpochMilli(date)))) {
             throw new ScheduleTimeNotAvailableException();
         }
@@ -140,7 +140,7 @@ public class SchedulingService {
 
     private void scheduleValidations(Barber barber, BarberShop barberShop, Long date) {
         validateDate(date);
-        validateAvailableTime(date, barberShop);
+        validateAvailableTime(date, barberShop,barber);
         validateBarber(barber, barberShop);
     }
 

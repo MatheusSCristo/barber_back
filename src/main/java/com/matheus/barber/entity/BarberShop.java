@@ -43,16 +43,18 @@ public class BarberShop {
     private String instagramUrl;
     @Column(name = "images_url")
     private List<String> imagesUrl=new ArrayList<>();
+    @Column(name = "profile_image")
+    private String profileImage;
     @CreatedDate
     @Column(name = "created_at",nullable = false)
     private Timestamp createdAt;
     @OneToMany(mappedBy = "barberShop")
     private List<Scheduling> schedulings=new ArrayList<>();
-    @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "barberShop")
     private List<Barber> barbers=new ArrayList<>();
-    @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "barberShop")
     private List<BarberShopRating> ratings=new ArrayList<>();
-    @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "barberShop")
     private List<Service> services=new ArrayList<>();
     private List<SchedulesEnum>  schedules=new ArrayList<>();
 
@@ -69,6 +71,7 @@ public class BarberShop {
         this.instagramUrl=barberShopCreateDto.instagram_url();
         this.imagesUrl=barberShopCreateDto.images_url();
         this.schedules=barberShopCreateDto.available_schedules().stream().map(item->SchedulesEnum.fromString(item)).toList();
+        this.profileImage=barberShopCreateDto.profile_image();
     }
 
 

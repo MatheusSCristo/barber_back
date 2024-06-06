@@ -51,6 +51,7 @@ public class BarberShopService {
         barberShop.setCep(Optional.ofNullable(barberShopUpdateDto.cep()).orElse(barberShop.getCep()));
         barberShop.setInstagramUrl(Optional.ofNullable(barberShopUpdateDto.instagram_url()).orElse(barberShop.getInstagramUrl()));
         barberShop.setImagesUrl(Optional.ofNullable(barberShopUpdateDto.images_url()).orElse(barberShop.getImagesUrl()));
+        barberShop.setProfileImage(Optional.ofNullable(barberShopUpdateDto.profile_image()).orElse(barberShop.getProfileImage()));
         barberShop.setSchedules(Optional.ofNullable(barberShopUpdateDto.available_schedules().stream().map(item ->SchedulesEnum.fromString(item)).toList()).orElse(barberShop.getSchedules()));
         barberShopRepository.save(barberShop);
         return new BarberShopResponseDto(barberShop);

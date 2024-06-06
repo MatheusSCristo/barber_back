@@ -33,8 +33,8 @@ public class Barber {
     @CreatedDate
     @Column(name = "created_at",nullable = false,updatable = false)
     private Timestamp createdAt;
-    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "barber_shop_id")
+    @ManyToOne
     private BarberShop barberShop;
     @OneToMany(mappedBy = "barber",cascade = CascadeType.ALL)
     private List<Scheduling> schedulings=new ArrayList<>();
