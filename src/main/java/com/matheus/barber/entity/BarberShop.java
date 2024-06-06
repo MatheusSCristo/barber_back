@@ -46,7 +46,7 @@ public class BarberShop {
     @CreatedDate
     @Column(name = "created_at",nullable = false)
     private Timestamp createdAt;
-    @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "barberShop")
     private List<Scheduling> schedulings=new ArrayList<>();
     @OneToMany(mappedBy = "barberShop",fetch = FetchType.EAGER)
     private List<Barber> barbers=new ArrayList<>();

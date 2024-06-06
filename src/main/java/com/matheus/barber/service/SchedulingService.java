@@ -8,6 +8,7 @@ import com.matheus.barber.entity.*;
 import com.matheus.barber.enums.SchedulesEnum;
 import com.matheus.barber.infra.exceptions.*;
 import com.matheus.barber.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 
@@ -86,9 +88,10 @@ public class SchedulingService {
         Optional<Scheduling> optionalScheduling = schedulingRepository.findById(id);
         if (optionalScheduling.isEmpty()) throw new SchedulingNotFoundException();
         Scheduling scheduling = optionalScheduling.get();
-        scheduling.setFinished(schedulingUpdateDto.finished());
+        scheduling.setFinished(Optional.ofNullable(schedulingUpdateDto.finished()).orElse(scheduling.isFinished()));
         if (schedulingUpdateDto.start_time() != null) {
             validateDate(schedulingUpdateDto.start_time());
+            validateAvailableTime(schedulingUpdateDto.start_time(),scheduling.getBarberShop());
             scheduling.setStartTime(Timestamp.from(Instant.ofEpochMilli(schedulingUpdateDto.start_time())));
             scheduling.setEndTime(getEndTime(scheduling.getStartTime().getTime(), optionalScheduling.get().getService().getAverageDuration()));
         }
@@ -99,9 +102,11 @@ public class SchedulingService {
             scheduling.setBarber(optionalBarber.get());
         }
         schedulingRepository.save(scheduling);
+        emailConsumerService.sendScheduledEmail(scheduling);
         return new SchedulingResponseDto(optionalScheduling.get());
     }
 
+    @Transactional
     public void deleteScheduling(UUID id) {
         Optional<Scheduling> optionalScheduling = schedulingRepository.findById(id);
         if (optionalScheduling.isEmpty()) throw new SchedulingNotFoundException();
@@ -122,7 +127,12 @@ public class SchedulingService {
         if (!barberShop.getSchedules().contains(SchedulesEnum.fromString(scheduledHour))) {
             throw new ScheduleTimeNotAvailableException();
         }
+        List<Timestamp> upcomingSchedulings = barberShop.getSchedulings().stream().filter(item -> item.getStartTime().after(Timestamp.from(Instant.now())) && item.isBooked()).map(Scheduling::getStartTime).toList();
+        if (upcomingSchedulings.contains(Timestamp.from(Instant.ofEpochMilli(date)))) {
+            throw new ScheduleTimeNotAvailableException();
+        }
     }
+
 
     private void validateBarber(Barber barber, BarberShop barberShop) {
         if (!barberShop.getBarbers().contains(barber)) throw new BarberNotAssociatedToBarberShopException();
@@ -133,9 +143,6 @@ public class SchedulingService {
         validateAvailableTime(date, barberShop);
         validateBarber(barber, barberShop);
     }
-
-
-
 
 
 }

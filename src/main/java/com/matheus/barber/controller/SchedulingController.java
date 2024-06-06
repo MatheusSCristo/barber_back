@@ -41,7 +41,7 @@ public class SchedulingController {
 
     @PutMapping("{id}")
     public ResponseEntity<SchedulingResponseDto> updateScheduling(@PathVariable UUID id,@RequestBody @Valid SchedulingUpdateDto schedulingUpdateDto){
-        return ResponseEntity.ok().body(schedulingService.updateScheduling(id,schedulingUpdateDto));
+        return ResponseEntity.ok().body(schedulingService.  updateScheduling(id,schedulingUpdateDto));
     }
 
     @DeleteMapping("{id}")

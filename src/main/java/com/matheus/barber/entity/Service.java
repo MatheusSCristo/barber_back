@@ -32,7 +32,7 @@ public class Service {
     @Column(name = "average_duration")
     private Integer averageDuration;
     private Double total;
-    @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "service")
     private List<Scheduling> schedulings = new ArrayList<>();
 
     public Service(ServiceCreateDto serviceCreateDto){
