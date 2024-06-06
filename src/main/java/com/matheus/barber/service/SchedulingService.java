@@ -38,6 +38,9 @@ public class SchedulingService {
     @Autowired
     private BarberRepository barberRepository;
 
+    @Autowired
+    private EmailConsumerService emailConsumerService;
+
 
     public List<SchedulingResponseDto> getSchedulingByBarberShopId(UUID id) {
         Optional<BarberShop> optionalBarberShop = barberShopRepository.findById(id);
@@ -75,6 +78,7 @@ public class SchedulingService {
         scheduling.setUser(optionalUser.get());
         scheduling.setEndTime(getEndTime(schedulingCreateDto.start_time(), optionalService.get().getAverageDuration()));
         schedulingRepository.save(scheduling);
+        emailConsumerService.sendScheduledEmail(scheduling);
         return new SchedulingResponseDto(scheduling);
     }
 

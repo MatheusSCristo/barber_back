@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Getter
@@ -17,8 +21,8 @@ public class SchedulingResponseDto {
     private UUID barberShopId;
     private UUID userId;
     private ServiceResponseDto service;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private String startTime;
+    private String endTime;
     private boolean booked;
     private boolean finished;
 
@@ -28,8 +32,12 @@ public class SchedulingResponseDto {
         this.barberShopId=scheduling.getBarberShop().getId();
         this.userId=scheduling.getUser().getId();
         this.service= new ServiceResponseDto(scheduling.getService());
-        this.startTime=scheduling.getStartTime();
-        this.endTime=scheduling.getEndTime();
+        ZoneId zoneIdUTCMinus3 = ZoneId.of("America/Sao_Paulo");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(zoneIdUTCMinus3);
+        Instant startInstant = scheduling.getStartTime().toInstant();
+        this.startTime = formatter.format(startInstant);
+        Instant endInstant = scheduling.getEndTime().toInstant();
+        this.endTime = formatter.format(endInstant);
         this.booked=scheduling.isBooked();
         this.finished=scheduling.isFinished();
     }

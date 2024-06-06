@@ -3,12 +3,10 @@ package com.matheus.barber.controller;
 import com.matheus.barber.dto.Scheduling.SchedulingCreateDto;
 import com.matheus.barber.dto.Scheduling.SchedulingResponseDto;
 import com.matheus.barber.dto.Scheduling.SchedulingUpdateDto;
-import com.matheus.barber.entity.Scheduling;
 import com.matheus.barber.service.SchedulingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,11 +49,4 @@ public class SchedulingController {
         schedulingService.deleteScheduling(id);
         return ResponseEntity.ok().build();
     }
-
-
-
-
-
-
-
 }
