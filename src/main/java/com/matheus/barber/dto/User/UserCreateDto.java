@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.sql.Timestamp;
 
-public record UserCreateDto(@NotBlank @Min(3) String name, @NotBlank @Min(3) String last_name, @NotBlank @Email String email,
+public record UserCreateDto(@NotBlank String name, @NotBlank String last_name, @NotBlank @Email String email,
                             @NotBlank @Min(6) String password, @NotNull Timestamp birth_date, @NotBlank String phone_number,
-                            @NotNull SexEnum sexEnum, @NotBlank @CPF String cpf, @NotNull RoleEnum role) {
+                            @NotNull SexEnum sex, @NotBlank @CPF String cpf, @NotNull RoleEnum role) {
 }

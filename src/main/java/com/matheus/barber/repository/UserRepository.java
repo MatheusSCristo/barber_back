@@ -14,8 +14,10 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("SELECT DISTINCT u FROM User u JOIN u.schedulings s WHERE s.barber.id = :barberId")
-    public List<User> findAllByBarber(@Param("barberId") UUID barberId);
+     List<User> findAllByBarber(@Param("barberId") UUID barberId);
 
     @Query("SELECT DISTINCT u FROM User u JOIN u.schedulings s WHERE s.barberShop.id= :barberShopId")
-    public List<User> findAllByBarberShop(@Param("barberShopId") UUID BarberShopId);
+     List<User> findAllByBarberShop(@Param("barberShopId") UUID BarberShopId);
+
+     Optional<User> findByEmail(String email);
 }
